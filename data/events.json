@@ -1,0 +1,48 @@
+{
+    "visit": {
+        "inputs": "timestamp",
+        "time": [0, 20],
+        "next_events": ["search", "do_nothing"],
+        "probabilities": [0.6, 0.4]
+    },
+    "create_account": {
+        "time": [30, 150],
+        "next_events": ["search", "do_nothing"],
+        "probabilities": [0.9, 0.1]        
+    },
+    "search": {
+        "time": [10, 120],
+        "next_events": ["search", "view_item", "do_nothing"],
+        "probabilities": [0.3, 0.6, 0.1]       
+    },
+    "view_item": {
+        "time": [10, 30],
+        "next_events": ["view_item", "search", "add_to_basket", "do_nothing"],
+        "probabilities": [0.6, 0.2, 0.1, 0.1]          
+    }, 
+    "add_to_basket": {
+        "conditions": ["registered"],
+        "time": [5, 120],
+        "next_events": ["search", "view_item", "open_basket", "do_nothing"],
+        "probabilities": [0.2, 0.2, 0.5, 0.1]        
+    },
+    "open_basket": {
+        "conditions": ["n_items_in_basket > 0"],
+        "time": [5, 120],
+        "next_events": ["search", "remove_from_basket", "pay",  "do_nothing"],
+        "probabilities": [0.1, 0.2, 0.6, 0.1]        
+    },
+    "remove_from_basket": {
+        "conditions": ["n_items_in_basket > 0"],
+        "time": [1, 20],
+        "next_events": ["search", "pay", "remove_from_basket", "do_nothing"],
+        "probabilities": [0.1, 0.4, 0.4, 0.1]        
+    },
+    "pay": {
+        "conditions": ["registered", "n_items_in_basket > 0"],
+        "time": [180, 1800],
+        "next_events": ["search", "do_nothing"],
+        "probabilities": [0.1, 0.9]        
+    },
+    "do_nothing": {}
+}
